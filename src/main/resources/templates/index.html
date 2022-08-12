@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Page</title>
+    <style>
+        table, tr {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        img {
+            padding: 3px;
+            margin: 5px;
+        }
+
+        button {
+            align-items: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1>Crypto News of the Day</h1>
+    <form action="/articles" method="POST">
+
+        <button type="submit">Save</button>
+    
+        <table>
+            <tr data-th-each="n : ${newsList}">
+                <td>
+                    <img data-th-src="${n.imageUrl}" width="100px" alt="IMG">
+                </td>
+                <td >
+                    <p>
+                        Id: <span data-th-text="${n.id}"></span>
+                    </p>
+                    <p>
+                        <strong><span data-th-text="${n.title}"></span></strong>
+                    </p>
+
+                    <p data-th-text="${n.body}"></p>
+
+                    <p>
+                        Categories: <span data-th-text="${n.categories}"></span>
+                    </p>
+
+                    <p>
+                        Tags: <span data-th-text="${n.tags}"></span>
+                    </p>
+                           
+                    <p>
+                        Published: <span data-th-text="${n.publishedOn}"></span>
+                    </p>
+
+                    <a data-th-href="${n.url}">Link</a>
+                    <input type="checkbox" name="saveNews" value="data-th-each="${n}""/>Save
+
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

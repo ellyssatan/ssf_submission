@@ -2,13 +2,10 @@ package vttp.ssf_submission.services;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +18,6 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import vttp.ssf_submission.models.Articles;
-import vttp.ssf_submission.models.News;
 
 @Service
 public class NewsService {
@@ -31,7 +27,7 @@ public class NewsService {
     @Value("${CRYPTO_KEY}")
     private String key;
 
-    public List<News> getArticles() {
+    public List<Articles> getArticles() {
 
         String payload;
 
@@ -43,7 +39,6 @@ public class NewsService {
         // Create the GET request, GET url
         RequestEntity<Void> req = RequestEntity.get(uri).build();
 
-        // Make the call to OpenWeatherApp
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> resp;
 
@@ -55,7 +50,6 @@ public class NewsService {
             return Collections.emptyList();
         }
 
-        // Check status code
         if (resp.getStatusCodeValue() != 200) {
             System.err.println("Error status code is not 200\n");
             return Collections.emptyList();
@@ -73,21 +67,22 @@ public class NewsService {
         JsonReader jsonReader = Json.createReader(strReader);
 
         // Read and save the payload as Json Object
-        JsonObject coins = jsonReader.readObject();
+        JsonObject jObject = jsonReader.readObject();
                                          // should tally with the object name from api
-        JsonArray coinList = coins.getJsonArray("Data");
+        JsonArray articleArray = jObject.getJsonArray("Data");
 
         List<Articles> list = new LinkedList<>();
-        for (int i = 0; i < coinList.size(); i++) {
+        for (int i = 0; i < articleArray.size(); i++) {
             // loop through the top _ coins
-            JsonObject jo = coinList.getJsonObject(i);
-
+            JsonObject jo = articleArray.getJsonObject(i);
             list.add(Articles.create(jo));
         }
         return list;
     }
 
-    
-}
+    // public saveArticles(List<Articles> list) {
 
+    // }
+
+    
 }
