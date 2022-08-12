@@ -40,6 +40,7 @@ public class Articles {
     public String getCategories() {     return categories;  }
     public void setCategories(String categories) {    this.categories = categories;     }
 
+    // Create Model from JsonObject
     public static Articles create(JsonObject jo) {
         Articles n = new Articles();
         n.setId(jo.getString("id"));
@@ -55,6 +56,7 @@ public class Articles {
 
     }
 
+    // Convert model to JsonObject
     public JsonObject toJson() {
         return Json.createObjectBuilder()
             .add("id", id)
@@ -67,6 +69,14 @@ public class Articles {
             .add("categories", categories)
             .build();
     }
+
+    public static String createJsonString(JsonObject jo) {
+        System.out.printf("JSON >>>>> %s\n\n", jo);
+        System.out.printf("JSON STRING >>>>> %s\n\n", jo.toString());
+
+        return jo.toString();
+    }
+
 
     public static Articles create(String jsonStr) {
         System.out.printf(">>>>JSON STRING: %s\n\n", jsonStr);

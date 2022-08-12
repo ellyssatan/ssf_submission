@@ -91,6 +91,7 @@ public class NewsService {
 
         Articles a = Articles.create(jsonStr);
         System.out.printf(">>> ARTICLE GENERATED %s\n\n", a.toString());
+        System.out.println("------------" + Articles.createJsonString(a.toJson()));
 
         String id = a.getId();
         System.out.printf(">>> ID RETRIEVED %s\n\n", id);

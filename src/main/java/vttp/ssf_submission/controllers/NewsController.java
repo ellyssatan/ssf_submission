@@ -36,15 +36,17 @@ public class NewsController {
     }
 
     @PostMapping(path = "/articles")
-    public String saveArticles(@RequestBody MultiValueMap<String, String> form, Model model) {
-        List<String> newslist = form.get("saveNews");
+    public String saveArticlesMethod(@RequestBody MultiValueMap<String, String> form, Model model) {
+        List<String> selectedList = form.get("saveNews");
+        System.out.println(">>>> selectedList:" + selectedList);
 
-        System.out.println(">>>> NEWSLIST:" + newslist);
-
-        for (String l : newslist) {
-           nRepo.saveNews(l); 
+        for (String l : selectedList) {
+           newsSvc.saveArticles(l); 
         }
-        return "index";
+
+        List<Articles> newsList = newsSvc.getArticles();
+        model.addAttribute("newsList", newsList);
+        return "redirect:/index";
     }
 
 }

@@ -32,10 +32,14 @@ public class NewsRESTController {
     public ResponseEntity<String> retrieveArticle(@PathVariable(name = "id") String id) {
 
         if (!nRepo.IdExists(id)) {
-            String errorMsg = "Article Id: %s not saved in database".formatted(id);
+            JsonObject errorMsg = Json.createObjectBuilder()
+                .add("error", "Cannot find news article %s".formatted(id))
+                .build();
+                
+            String payload = errorMsg.toString();
             return ResponseEntity
                     .badRequest()
-                    .body(errorMsg);
+                    .body(payload);
         }
 
         // Get article by id
