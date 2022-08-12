@@ -8,7 +8,7 @@ import jakarta.json.JsonReader;
 
 public class Articles {
     private String id;
-    private String publishedOn;
+    private int publishedOn;
     private String title;
     private String url;
     private String imageUrl;
@@ -19,12 +19,9 @@ public class Articles {
     public String getId() {   return id;    }
     public void setId(String id) {  this.id = id;   }
 
-    public String getPublishedOn() {   return publishedOn;    }
-    public void setPublishedOn(String publishedOn) {  this.publishedOn = publishedOn;   }
+    public int getPublishedOn() {   return publishedOn;    }
+    public void setPublishedOn(int publishedOn) {  this.publishedOn = publishedOn;   }
 
-    // public long getPublishedOn() {   return publishedOn;    }
-    // public void setPublishedOn(long publishedOn) {  this.publishedOn = publishedOn;   }
-   
     public String getTitle() {      return title;   }
     public void setTitle(String title) {    this.title = title;     }
 
@@ -46,7 +43,7 @@ public class Articles {
     public static Articles create(JsonObject jo) {
         Articles n = new Articles();
         n.setId(jo.getString("id"));
-        n.setPublishedOn(jo.getString("published_on"));
+        n.setPublishedOn(jo.getInt("published_on"));
         n.setTitle(jo.getString("title"));
         n.setUrl(jo.getString("url"));
         n.setImageUrl(jo.getString("imageurl"));
@@ -63,7 +60,7 @@ public class Articles {
             .add("id", id)
             .add("title", title)
             .add("body", body)
-            // .add("published_on", publishedOn)
+            .add("published_on", publishedOn)
             .add("url", url)
             .add("imageurl", imageUrl)
             .add("tags", tags)
@@ -72,10 +69,23 @@ public class Articles {
     }
 
     public static Articles create(String jsonStr) {
-        System.out.printf(">>>>JSON STRING: %s", jsonStr);
+        System.out.printf(">>>>JSON STRING: %s\n\n", jsonStr);
         StringReader reader = new StringReader(jsonStr);
         JsonReader r = Json.createReader(reader);
 
         return create(r.readObject());
     }
+
+    // public static Cart create(String jsonStr) {
+    //     Reader reader = new StringReader(jsonStr);
+    //     JsonReader jr = Json.createReader(reader);
+    //     JsonObject c = jr.readObject();
+    //     Cart cart = new Cart(c.getString("name"));
+    //     List<Item> contents = c.getJsonArray("contents").stream()
+    //                         .map(v -> (JsonObject) v )
+    //                         .map(Item :: create)
+    //                         .toList();
+    //     cart.setContents(contents);
+    //     return cart;
+    // }
 }

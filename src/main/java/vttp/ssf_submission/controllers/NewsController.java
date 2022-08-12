@@ -37,18 +37,13 @@ public class NewsController {
 
     @PostMapping(path = "/articles")
     public String saveArticles(@RequestBody MultiValueMap<String, String> form, Model model) {
-        // dpedns
         List<String> newslist = form.get("saveNews");
-        List<Articles> articleList = new LinkedList<>();
-        System.out.println(">>>>ID LIST:" + newslist);
+
+        System.out.println(">>>> NEWSLIST:" + newslist);
+
         for (String l : newslist) {
-            articleList.add(Articles.create(l));
+           nRepo.saveNews(l); 
         }
-
-        for (Articles a : articleList) {
-           nRepo.saveNews(a); 
-        }
-
         return "index";
     }
 

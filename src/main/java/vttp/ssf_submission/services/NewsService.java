@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import vttp.ssf_submission.models.Articles;
+import vttp.ssf_submission.repositories.NewsRepository;
 
 @Service
 public class NewsService {
@@ -26,6 +28,9 @@ public class NewsService {
     
     @Value("${CRYPTO_KEY}")
     private String key;
+
+    @Autowired
+    private NewsRepository nRepo;
 
     public List<Articles> getArticles() {
 
@@ -75,9 +80,28 @@ public class NewsService {
         for (int i = 0; i < articleArray.size(); i++) {
             // loop through the top _ coins
             JsonObject jo = articleArray.getJsonObject(i);
+            
             list.add(Articles.create(jo));
         }
         return list;
+    }
+
+    public List<Articles> saveArticles(String jsonStr) {
+        System.out.printf(">>> JSONSTR:: %s\n\n", jsonStr);
+
+        Articles a = Articles.create(jsonStr);
+        System.out.printf(">>> ARTICLE GENERATED %s\n\n", a.toString());
+
+        String id = a.getId();
+        System.out.printf(">>> ID RETRIEVED %s\n\n", id);
+
+        List<Articles> list = new LinkedList<>();
+
+        nRepo.saveNews(id, a);
+
+
+        return list;
+
     }
     
 }

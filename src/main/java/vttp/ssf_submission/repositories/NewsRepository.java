@@ -21,14 +21,10 @@ public class NewsRepository {
     @Autowired
     @Qualifier("redis")
     private RedisTemplate<String, Object> redisTemplate;
-    // private RedisTemplate<String, Articles> rt;
 
-    public void saveNews(Articles a) {
-        String id = a.getId();
+    public void saveNews(String id, Articles a) {
+
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
-		// ListOperations<String, Articles> listOps = rt.opsForList();
-        System.out.println(">>> SAVED\n\n" + id);
-        System.out.println(">>> LOAD\n\n" + a);
         valueOps.set(id, a);
     }
 
@@ -44,8 +40,6 @@ public class NewsRepository {
             return Optional.empty();
         }
 
-        System.out.println("HERRERERERE");
-
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
         
         // returns how many items in the cart
@@ -53,7 +47,7 @@ public class NewsRepository {
         
         if (size > 0) {
             Object news = valueOps.get(id);
-            System.out.println("OBJECT -------------" + news);
+            System.out.println("OBJECT ------------- " + news);
             result = Articles.create((JsonObject) news);
         }
     
@@ -61,12 +55,13 @@ public class NewsRepository {
 	}
     
     public boolean IdExists(String id) {
-        System.out.println("Entered idexists");
+        // System.out.println("Entered idexists");
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
         if (redisTemplate.hasKey(id)) {
+            System.out.println("USER EXISTS");
               return true;
         }
-        System.out.println("isUserFound: " + false);
+        System.out.println("USER DOESNT EXIST");
         return false;
     }
 }
