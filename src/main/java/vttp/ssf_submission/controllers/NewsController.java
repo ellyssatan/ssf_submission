@@ -1,6 +1,5 @@
 package vttp.ssf_submission.controllers;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import vttp.ssf_submission.models.Articles;
-import vttp.ssf_submission.repositories.NewsRepository;
 import vttp.ssf_submission.services.NewsService;
 
 @Controller
@@ -22,10 +20,6 @@ public class NewsController {
 
     @Autowired
     private NewsService newsSvc;
-
-    @Autowired
-    private NewsRepository nRepo;
-
 
     @GetMapping(path = "/")
     public String getNews(Model model) {

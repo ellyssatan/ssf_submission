@@ -1,7 +1,5 @@
 package vttp.ssf_submission.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,19 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
-import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
 import vttp.ssf_submission.models.Articles;
 import vttp.ssf_submission.repositories.NewsRepository;
-import vttp.ssf_submission.services.NewsService;
 
 @RestController
 @RequestMapping(path = "/news")
 public class NewsRESTController {
-    
-    @Autowired
-    private NewsService nSvc;
 
     @Autowired
     private NewsRepository nRepo;
