@@ -10,36 +10,42 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+import vttp.ssf_submission.models.Articles;
+import vttp.ssf_submission.repositories.NewsRepository;
 import vttp.ssf_submission.services.NewsService;
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/news")
 public class NewsRESTController {
     
     @Autowired
     private NewsService nSvc;
 
-    @GetMapping(path = "/news/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> retrieveArticle(@PathVariable(name = "id") Integer id) {
+    @Autowired
+    private NewsRepository nRepo;
 
-        // Optional<A>
-        // if ((count < 1) || (count>10)) {
-        //     String errorMsg = "Valid dice count is between 1 and 10, %d exceeded range".formatted(count);
-        //     return ResponseEntity
-        //             // .status(HttpStatus.BAD_REQUEST)
-        //             .badRequest()
-        //             .body(errorMsg);
-        // }
-        // // Get dice roll
-        // List<Integer> rolls = diceSvc.roll(count);
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> retrieveArticle(@PathVariable(name = "id") String id) {
 
-        // String csvString = rolls
-        //         .stream()
-        //         .map(v -> v.toString())
-        //         .collect(Collectors.joining(","));
-        
-        // return ResponseEntity.ok(csvString);
-        return null;
+        if (!nRepo.IdExists(id)) {
+            String errorMsg = "Article Id: %s not saved in database".formatted(id);
+            return ResponseEntity
+                    .badRequest()
+                    .body(errorMsg);
+        }
+
+        // Get article by id
+        Articles op = nRepo.getArticleById(id).get();
+
+        // Create response payload
+        JsonObject jsonArticle = op.toJson();
+        System.out.println(">>>>> CONVERTED:   " + jsonArticle);
+
+        return ResponseEntity.ok(jsonArticle.toString());
 
     }
 

@@ -79,10 +79,5 @@ public class NewsService {
         }
         return list;
     }
-
-    // public saveArticles(List<Articles> list) {
-
-    // }
-
     
 }

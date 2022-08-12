@@ -30,7 +30,6 @@ public class NewsController {
     @GetMapping(path = "/")
     public String getNews(Model model) {
         List<Articles> newsList = newsSvc.getArticles();
-        System.out.printf(">>> newsList: %s", newsList);
 
         model.addAttribute("newsList", newsList);
         return "index";
@@ -38,9 +37,9 @@ public class NewsController {
 
     @PostMapping(path = "/articles")
     public String saveArticles(@RequestBody MultiValueMap<String, String> form, Model model) {
+        // dpedns
         List<String> newslist = form.get("saveNews");
         List<Articles> articleList = new LinkedList<>();
-        List<Articles> savedList = new LinkedList<>();
         System.out.println(">>>>ID LIST:" + newslist);
         for (String l : newslist) {
             articleList.add(Articles.create(l));
@@ -49,8 +48,6 @@ public class NewsController {
         for (Articles a : articleList) {
            nRepo.saveNews(a); 
         }
-        
-
 
         return "index";
     }

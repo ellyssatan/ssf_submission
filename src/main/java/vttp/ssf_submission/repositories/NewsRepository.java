@@ -24,7 +24,6 @@ public class NewsRepository {
     // private RedisTemplate<String, Articles> rt;
 
     public void saveNews(Articles a) {
-
         String id = a.getId();
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
 		// ListOperations<String, Articles> listOps = rt.opsForList();
@@ -60,8 +59,14 @@ public class NewsRepository {
     
         return Optional.of(result);
 	}
-    // if (!redisTemplate.hasKey(id)) {
-            
-
-    // }
+    
+    public boolean IdExists(String id) {
+        System.out.println("Entered idexists");
+        ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
+        if (redisTemplate.hasKey(id)) {
+              return true;
+        }
+        System.out.println("isUserFound: " + false);
+        return false;
+    }
 }
