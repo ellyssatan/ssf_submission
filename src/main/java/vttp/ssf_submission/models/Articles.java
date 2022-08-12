@@ -85,17 +85,4 @@ public class Articles {
 
         return create(r.readObject());
     }
-
-    // public static Cart create(String jsonStr) {
-    //     Reader reader = new StringReader(jsonStr);
-    //     JsonReader jr = Json.createReader(reader);
-    //     JsonObject c = jr.readObject();
-    //     Cart cart = new Cart(c.getString("name"));
-    //     List<Item> contents = c.getJsonArray("contents").stream()
-    //                         .map(v -> (JsonObject) v )
-    //                         .map(Item :: create)
-    //                         .toList();
-    //     cart.setContents(contents);
-    //     return cart;
-    // }
 }
