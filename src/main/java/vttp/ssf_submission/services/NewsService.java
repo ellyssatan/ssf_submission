@@ -89,11 +89,13 @@ public class NewsService {
     public List<Articles> saveArticles(String jsonStr) {
         System.out.printf(">>> JSONSTR:: %s\n\n", jsonStr);
 
-        Articles a = Articles.create(jsonStr);
-        System.out.printf(">>> ARTICLE GENERATED %s\n\n", a.toString());
-        System.out.println("------------" + Articles.createJsonString(a.toJson()));
+        Articles articleObject = Articles.create(jsonStr);
+        System.out.printf(">>> ARTICLE GENERATED %s\n\n", articleObject.toString());
 
-        String id = a.getId();
+        String a = Articles.create(jsonStr).toString();
+        System.out.println("------------" + Articles.createJsonString(articleObject.toJson()));
+
+        String id = articleObject.getId();
         System.out.printf(">>> ID RETRIEVED %s\n\n", id);
 
         List<Articles> list = new LinkedList<>();

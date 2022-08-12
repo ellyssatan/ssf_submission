@@ -36,12 +36,26 @@ public class NewsRESTController {
 
         // Get article by id
         Articles op = nRepo.getArticleById(id).get();
+        System.out.println("op id>>>>>>" + op.getId());
+        System.out.println("op >>>>>>" + op);
 
         // Create response payload
-        JsonObject jsonArticle = op.toJson();
-        System.out.println(">>>>> CONVERTED:   " + jsonArticle);
+        // JsonObject jsonArticle = op.toJson();
+        // System.out.println(">>>>> CONVERTED:   " + jsonArticle);
+        
+        JsonObject builder = Json
+                .createObjectBuilder()
+                .add("id", op.getId())
+                .add("title", op.getTitle())
+                .add("body", op.getBody())
+                .add("published_on", op.getPublishedOn())
+                .add("url", op.getUrl())
+                .add("imageurl", op.getImageUrl())
+                .add("tags", op.getTags())
+                .add("categories", op.getCategories())
+                .build();
 
-        return ResponseEntity.ok(jsonArticle.toString());
+        return ResponseEntity.ok(builder.toString());
 
     }
 

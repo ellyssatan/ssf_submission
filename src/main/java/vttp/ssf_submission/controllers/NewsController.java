@@ -40,7 +40,7 @@ public class NewsController {
 
         List<Articles> newsList = newsSvc.getArticles();
         model.addAttribute("newsList", newsList);
-        return "redirect:/index";
+        return "index";
     }
 
 }

@@ -19,8 +19,7 @@ public class NewsRepository {
     @Qualifier("redis")
     private RedisTemplate<String, Object> redisTemplate;
 
-    public void saveNews(String id, Articles a) {
-
+    public void saveNews(String id, String a) {
         ValueOperations<String, Object> valueOps = redisTemplate.opsForValue();
         valueOps.set(id, a);
     }
